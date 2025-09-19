@@ -1,0 +1,9 @@
+
+Polina;ZFI;5,5,5
+Farida;ZFI;5,5,5
+Alisa Olegovna;ZFI;5,5,5
+EliZaVeta;ZVZ;5,2,2
+Mashka Alpha Palitra;WLW;2,2,2
+Ivan;ZPI; 1,1,1
+BrainRot;ZPI;1,1,2
+Tralalela;ZPI;2,2,2

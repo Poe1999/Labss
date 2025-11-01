@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- ИСПРАВИТЬ: Добавить корректные пути к CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>{% block title %}Spike Club{% endblock %}</title>
+
+    <!--  ДОБАВИТЬ: Базовые стили на случай проблем с загрузкой CSS -->
+    <style>
+        .fallback-styles {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a2f1e 0%, #1a5335 100%);
+            color: #333;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #ffd166;
+        }
+        .navbar-fallback {
+            background: #1a5335;
+            padding: 1rem;
+            color: white;
+        }
+    </style>
+</head>
+<body class="fallback-styles">
+    <!-- ДОБАВИТЬ: Сообщение о загрузке -->
+    <div id="loading" class="loading" style="display: none;">
+        🌵 Загрузка кактус-клуба...
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">
+                🌵 Spike Club
+            </a>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}">🏠 Гнездо</a></li>
+                <li><a href="{{ url_for('about') }}">📖 О Спайке</a></li>
+                <li><a href="{{ url_for('users') }}">👥 Бойцы</a></li>
+                <li><a href="{{ url_for('add_user') }}">➕ Новый боец</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            {% if category == 'success' %}
+                                🌵
+                            {% elif category == 'error' %}
+                                ⚠️
+                            {% endif %}
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>🌵 &copy; 2024 Spike Club. Все права защищены кактусами.</p>
+        <p style="font-size: 0.8rem; margin-top: 5px; color: #a8e6cf;">При поддержке Brawl Stars</p>
+    </footer>
+
+    <!-- ИСПРАВИТЬ: Добавить проверку загрузки CSS -->
+    <script>
+        // Проверка загрузки CSS
+        document.addEventListener('DOMContentLoaded', function() {
+            var stylesheets = document.styleSheets;
+            var cssLoaded = false;
+
+            for (var i = 0; i < stylesheets.length; i++) {
+                try {
+                    if (stylesheets[i].cssRules.length > 0) {
+                        cssLoaded = true;
+                        break;
+                    }
+                } catch(e) {
+                    // Игнорируем ошибки CORS
+                }
+            }
+
+            if (!cssLoaded) {
+                document.getElementById('loading').style.display = 'block';
+                console.log('CSS не загружен, проверьте путь к файлам');
+            }
+        });
+
+        // Добавляем анимацию для интерактивности
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация для кнопок
+            const buttons = document.querySelectorAll('.btn, .nav-menu a');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Анимация для карточек
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

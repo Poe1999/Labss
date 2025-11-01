@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Добавить пользователя</h1>
+
+    <form method="POST" class="user-form">
+        <div class="form-group">
+            <label for="name">Имя пользователя:</label>
+            <input type="text" id="name" name="name" required
+                   placeholder="Введите имя" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required
+                   placeholder="Введите email" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">Добавить пользователя</button>
+        <a href="{{ url_for('users') }}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>
